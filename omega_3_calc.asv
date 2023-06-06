@@ -1,10 +1,16 @@
 %%%load voxelID before running the code
-
-dim=500-6*18; %%%dimension of the block 
+function []=omega_3_calc(directory,file_name_part)
+featureID_dataset='/DataContainers/SyntheticVolumeDataContainer/CellData/FeatureIds';
+cd(directory);
+d=dir(file_name_part);
+file_dir=fullfile(directory,d(1).name);
+voxelID=permute(h5read(file_dir,featureID_dataset),[2,3,4,1]);
+size(voxelID)
+%dim=500-6*18; %%%dimension of the block
 %cd(directory);
 
-    voxelID=reshape(voxelID,dim*[1 1 1]);
-    grainid=unique(voxelID);
+%voxelID=reshape(voxelID,dim*[1 1 1]);
+grainid=unique(voxelID);
 count=0;
 for ii=1:numel(grainid)
     vox_vol(ii)=numel(find(voxelID==grainid(ii)));
@@ -12,8 +18,8 @@ end
 
 %disp(vox_vol);
 tic;
-%for ii=1:numel(grainid)
-for ii=2140:2140 
+for ii=1:numel(grainid)4
+%for ii=2140:2140 
     count=0;
     id_no=ii;
     x_sum=0;
@@ -56,5 +62,5 @@ for ii=2140:2140
     clear xlen ylen zlen
 end
 toc;
-save('omega3_sd_15_normal','omega_3_bar'); %%omega_3_bar is the omega3 that is used in DREAM.3D
+save('omega3_','omega_3_bar'); %%omega_3_bar is the omega3 that is used in DREAM.3D
 save('ratio_sd15','ratio_len','abyb','bbyc');
